@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import '../models/meal.dart';
 
 class MealDetailScreen extends StatelessWidget {
+  final Function(Meal) ontoggleFavorite;
+  final bool Function(Meal) isFavorite;
+
+  MealDetailScreen(this.ontoggleFavorite, this.isFavorite);
   @override
   Widget build(BuildContext context) {
     final meal = ModalRoute.of(context).settings.arguments as Meal;
@@ -21,8 +25,8 @@ class MealDetailScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            MealTitleDetail(context, 'Indredients'),
-            ContainerMealDetail(
+            mealTitleDetail(context, 'Indredients'),
+            containerMealDetail(
               widget: ListView.builder(
                 itemCount: meal.ingredients.length,
                 itemBuilder: (ctx, index) {
@@ -41,8 +45,8 @@ class MealDetailScreen extends StatelessWidget {
                 },
               ),
             ),
-            MealTitleDetail(context, 'Steps'),
-            ContainerMealDetail(
+            mealTitleDetail(context, 'Steps'),
+            containerMealDetail(
               widget: ListView.builder(
                 itemCount: meal.steps.length,
                 itemBuilder: (ctx, index) {
@@ -60,13 +64,13 @@ class MealDetailScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).pop(meal.title),
-        child: Icon(Icons.favorite),
+        onPressed: () => ontoggleFavorite(meal),
+        child: Icon(isFavorite(meal) ? Icons.favorite : Icons.favorite_border),
       ),
     );
   }
 
-  Container ContainerMealDetail({Widget widget}) {
+  Container containerMealDetail({Widget widget}) {
     return Container(
       width: 350,
       height: 200,
@@ -83,7 +87,7 @@ class MealDetailScreen extends StatelessWidget {
     );
   }
 
-  Container MealTitleDetail(BuildContext context, title) {
+  Container mealTitleDetail(BuildContext context, title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Text(

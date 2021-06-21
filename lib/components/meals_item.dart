@@ -10,18 +10,10 @@ class MealItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void pushPage(BuildContext context, route, arguments) {
-      Navigator.of(context)
-          .pushNamed(
+      Navigator.of(context).pushNamed(
         route,
         arguments: arguments,
-      )
-          .then((results) {
-        if (results == null) {
-          print('Sem Resultado');
-        } else {
-          print('Nome da Refeição é $results');
-        }
-      });
+      );
     }
 
     return InkWell(
