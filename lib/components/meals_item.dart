@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/meal.dart';
-import '../utils/routes_named.dart';
+
 import '../utils/app_routes.dart';
 
 class MealItem extends StatelessWidget {
@@ -9,6 +9,21 @@ class MealItem extends StatelessWidget {
   MealItem({this.meal});
   @override
   Widget build(BuildContext context) {
+    void pushPage(BuildContext context, route, arguments) {
+      Navigator.of(context)
+          .pushNamed(
+        route,
+        arguments: arguments,
+      )
+          .then((results) {
+        if (results == null) {
+          print('Sem Resultado');
+        } else {
+          print('Nome da Refeição é $results');
+        }
+      });
+    }
+
     return InkWell(
       onTap: () => pushPage(context, AppRoutes.Meal_Detail_Screen, meal),
       child: Card(
